@@ -1,0 +1,20 @@
+
+[global]
+# Default proton version if the template nor the profile specify one
+proton = "/path/to/proton"
+
+[[template]]
+name = "template1"
+proton = "/path/to/proton1"
+
+# A profile is... a profile
+# It contains the information needed to run an application or a game.
+[[profile]]
+name = "profile1"
+template = "template1"
+game_id = "umu-123456"
+
+# Executable path and arguments to run the game. it can be overridden in the CLI when using `umu-wrapper run`
+exe = "/path/to/exe1"
+# Arguments are optional
+args = ["arg1", "arg2"]
