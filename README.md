@@ -20,7 +20,7 @@ re-use the same variables for multiple games. Think of it as just a more barebon
 ## Usage
 
 1. Install umu-launcher
-2. Create a TOML file with the following format:
+2. Create a TOML file with the following format in `~/.config/umu-wrapper.toml` (or any other path you want, just specify it with the `-c` flag)
 
 ```toml
 # Optional: Global variables that will be applied to all games.
