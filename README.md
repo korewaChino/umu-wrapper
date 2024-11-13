@@ -12,7 +12,11 @@ However, it's also kind of cumbersome to use UMU-Launcher, since you have to eit
 
 1. Run it from the terminal, and set all the environment variables for each game you want to run.
 2. Do the above, but script it.
-3. Create a profile for each game you want to run, as a separate TOML config.
+3. Create a profile for each game you want to run, as a separate TOML config. (see [man 5 umu-launcher](https://github.com/Open-Wine-Components/umu-launcher/blob/main/docs/umu.5.scd))
+
+All of the above are kind of cumbersome, especially if you have a lot of games you want to run. umu-wrapper is designed to make this process easier.
+
+Maybe you want to run a game with a shared WINE prefix, or you want to run all of them with a specific Proton runtime. You could write a TOML config or a script for each game, but that's a lot of work. umu-wrapper lets you define a template for a game, and then just specify the game's ID, executable and arguments. It will then derive the rest of the variables from the template instead of having to specify them for each game like you would with vanilla umu-launcher TOML configs.
 
 umu-wrapper simply wraps around umu-launcher that automatically generates profiles from a master TOML config, allowing you to
 re-use the same variables for multiple games. Think of it as just a more barebones version of Bottles, designed specifically to run with UMU-Launcher.
