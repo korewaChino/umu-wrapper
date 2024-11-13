@@ -2,6 +2,12 @@
 name = "umu-wrapper"
 version = "0.1.0"
 edition = "2021"
+authors = ["Cappy Ishihara <cappy@cappuchino.xyz>"]
+categories = ["command-line-utilities", "games"]
+description = "A simple templated wrapper for umu-launcher"
+license = "MIT"
+keywords = ["proton", "steam", "launcher", "umu", "wine"]
+repository = "https://github.com/korewaChino/umu-wrapper"
 
 [dependencies]
 clap = { version = "4.5.20", features = ["derive", "env"] }
