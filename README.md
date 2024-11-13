@@ -62,6 +62,6 @@ args = ["-arg1", "-arg2"]
 ## todo
 
 - [ ] MIME wrapper for .exe files, allowing you to launch executables directly from the file manager.
-- [ ] Multiple configuration files, allowing templates to be shared.
-
+- [x] Multiple configuration files, allowing templates and profiles to be split into multiple files.
+- [ ] A GUI for managing the configuration files.
 

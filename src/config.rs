@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
-use tracing::{instrument, warn};
+use tracing::{instrument, trace, warn};
 
 pub fn generate_prefix_dir(game_id: &str) -> String {
     format!("~/Games/umu/{}", game_id)
@@ -204,6 +204,29 @@ impl Config {
         let config: Config = toml::from_str(&config)?;
 
         Ok(config)
+    }
+
+    // Load additional configuration files from a directory
+    pub fn load_dir(&mut self, path: &str) -> Result<(), crate::error::Error> {
+        // if path not exists, return early
+        if !std::path::Path::new(path).exists() {
+            warn!("Path {} does not exist, skipping", path);
+            return Ok(());
+        }
+        let dir = std::fs::read_dir(path)?;
+
+        for entry in dir {
+            let entry = entry?;
+            let path = entry.path();
+            let config = std::fs::read_to_string(&path)?;
+            let config: Config = toml::from_str(&config)?;
+            trace!("Loaded config from {}", path.display());
+
+            self.template.extend(config.template);
+            self.profile.extend(config.profile);
+        }
+
+        Ok(())
     }
 
     #[instrument]

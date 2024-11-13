@@ -10,10 +10,24 @@ pub fn config_path() -> String {
     config_path
 }
 
+pub fn config_dir_path() -> String {
+    let config_dir_path = dirs::config_dir()
+        .expect("Failed to get config directory")
+        .join("umu-wrapper.toml.d")
+        .to_string_lossy()
+        .to_string();
+    config_dir_path
+}
+
 #[derive(Parser, Debug)]
 pub struct Args {
+    /// The main configuration file to read from
     #[clap(short = 'c', env = "UMUWRAPPER_CONFIG_PATH", default_value_t = config_path())]
     pub config: String,
+
+    /// The directory to read additional configuration files from
+    #[clap(short = 'd', env = "UMUWRAPPER_CONFIG_DIR_PATH", default_value_t = config_dir_path())]
+    pub config_dir: String,
 
     #[clap(short = 'p', long)]
     pub profile: String,
@@ -29,7 +43,15 @@ pub enum Subcommand {
 
 impl Args {
     pub fn run(&self) {
-        let config = crate::config::Config::load(&self.config).expect("Failed to load config");
+        let mut config = crate::config::Config::load(&self.config).expect("Failed to load config");
+
+        info!("Loaded config from: {}", self.config);
+
+        info!("Loading additional configs from: {}", self.config_dir);
+        config
+            .load_dir(&self.config_dir)
+            .expect("Failed to load additional configs");
+
         match &self.subcommand {
             Some(Subcommand::Run { args }) => {
                 info!("Attempting to resolve profile: {}", self.profile);
